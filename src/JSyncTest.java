@@ -45,7 +45,7 @@ public class JSyncTest {
 	}
 
 	/*
-	 * creates a test file of give size
+	 * creates a test file of given size
 	 */
 	void createFile(File f, long size) throws IOException {
 		f.delete(); // delete file if already exits
@@ -114,29 +114,6 @@ public class JSyncTest {
 			}
 		});
 		return ret;
-	}
-
-	void f(File f) throws IOException {
-		Map<String, Integer> map = new HashMap<>();
-		FileInputStream fin = new FileInputStream(f);
-		byte buf[] = new byte[1024];
-		int count = 0;
-		while (fin.available() > 0) {
-			sha1.reset();
-			fin.read(buf);
-			sha1.digest(buf);
-			byte hash[] = sha1.digest(buf);
-			StringBuilder sb = new StringBuilder();
-			for (byte b : hash) {
-				sb.append(String.format("%02x", b));
-			}
-			map.put(sb.toString(), map.getOrDefault(sb.toString(), 0) + 1);
-			count++;
-		}
-		fin.close();
-		System.out.println(count);
-		for (Entry<String, Integer> e : map.entrySet())
-			System.out.println(e.getKey() + " -> " + e.getValue() + (e.getValue() > 1 ? " ******" : ""));
 	}
 
 	/*
